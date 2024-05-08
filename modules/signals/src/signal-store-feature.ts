@@ -6,73 +6,79 @@ import {
 } from './signal-store-models';
 import { Prettify } from './ts-helpers';
 
-export function signalStoreFeature<F1 extends SignalStoreFeatureResult>(
-  f1: SignalStoreFeature<EmptyFeatureResult, F1>
-): SignalStoreFeature<EmptyFeatureResult, F1>;
 export function signalStoreFeature<
   F1 extends SignalStoreFeatureResult,
-  F2 extends SignalStoreFeatureResult
->(
-  f1: SignalStoreFeature<EmptyFeatureResult, F1>,
-  f2: SignalStoreFeature<{} & F1, F2>
-): SignalStoreFeature<EmptyFeatureResult, MergeFeatureResults<[F1, F2]>>;
+  Input extends SignalStoreFeatureResult = EmptyFeatureResult
+>(f1: SignalStoreFeature<NoInfer<Input>, F1>): SignalStoreFeature<Input, F1>;
 export function signalStoreFeature<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
-  F3 extends SignalStoreFeatureResult
+  Input extends SignalStoreFeatureResult = EmptyFeatureResult
 >(
-  f1: SignalStoreFeature<EmptyFeatureResult, F1>,
-  f2: SignalStoreFeature<{} & F1, F2>,
-  f3: SignalStoreFeature<MergeFeatureResults<[F1, F2]>, F3>
-): SignalStoreFeature<EmptyFeatureResult, MergeFeatureResults<[F1, F2, F3]>>;
+  f1: SignalStoreFeature<NoInfer<Input>, F1>,
+  f2: SignalStoreFeature<MergeFeatureResults<[NoInfer<Input>, F1]>, F2>
+): SignalStoreFeature<Input, MergeFeatureResults<[F1, F2]>>;
 export function signalStoreFeature<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
   F3 extends SignalStoreFeatureResult,
-  F4 extends SignalStoreFeatureResult
+  Input extends SignalStoreFeatureResult = EmptyFeatureResult
 >(
-  f1: SignalStoreFeature<EmptyFeatureResult, F1>,
-  f2: SignalStoreFeature<{} & F1, F2>,
-  f3: SignalStoreFeature<MergeFeatureResults<[F1, F2]>, F3>,
-  f4: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3]>, F4>
-): SignalStoreFeature<
-  EmptyFeatureResult,
-  MergeFeatureResults<[F1, F2, F3, F4]>
->;
+  f1: SignalStoreFeature<NoInfer<Input>, F1>,
+  f2: SignalStoreFeature<MergeFeatureResults<[NoInfer<Input>, F1]>, F2>,
+  f3: SignalStoreFeature<MergeFeatureResults<[NoInfer<Input>, F1, F2]>, F3>
+): SignalStoreFeature<Input, MergeFeatureResults<[F1, F2, F3]>>;
 export function signalStoreFeature<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
   F3 extends SignalStoreFeatureResult,
   F4 extends SignalStoreFeatureResult,
-  F5 extends SignalStoreFeatureResult
+  Input extends SignalStoreFeatureResult = EmptyFeatureResult
 >(
-  f1: SignalStoreFeature<EmptyFeatureResult, F1>,
-  f2: SignalStoreFeature<{} & F1, F2>,
-  f3: SignalStoreFeature<MergeFeatureResults<[F1, F2]>, F3>,
-  f4: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3]>, F4>,
-  f5: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4]>, F5>
-): SignalStoreFeature<
-  EmptyFeatureResult,
-  MergeFeatureResults<[F1, F2, F3, F4, F5]>
->;
+  f1: SignalStoreFeature<NoInfer<Input>, F1>,
+  f2: SignalStoreFeature<MergeFeatureResults<[NoInfer<Input>, F1]>, F2>,
+  f3: SignalStoreFeature<MergeFeatureResults<[NoInfer<Input>, F1, F2]>, F3>,
+  f4: SignalStoreFeature<MergeFeatureResults<[NoInfer<Input>, F1, F2, F3]>, F4>
+): SignalStoreFeature<Input, MergeFeatureResults<[F1, F2, F3, F4]>>;
 export function signalStoreFeature<
   F1 extends SignalStoreFeatureResult,
   F2 extends SignalStoreFeatureResult,
   F3 extends SignalStoreFeatureResult,
   F4 extends SignalStoreFeatureResult,
   F5 extends SignalStoreFeatureResult,
-  F6 extends SignalStoreFeatureResult
+  Input extends SignalStoreFeatureResult = EmptyFeatureResult
 >(
-  f1: SignalStoreFeature<EmptyFeatureResult, F1>,
-  f2: SignalStoreFeature<{} & F1, F2>,
-  f3: SignalStoreFeature<MergeFeatureResults<[F1, F2]>, F3>,
-  f4: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3]>, F4>,
-  f5: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4]>, F5>,
-  f6: SignalStoreFeature<MergeFeatureResults<[F1, F2, F3, F4, F5]>, F6>
-): SignalStoreFeature<
-  EmptyFeatureResult,
-  MergeFeatureResults<[F1, F2, F3, F4, F5, F6]>
->;
+  f1: SignalStoreFeature<NoInfer<Input>, F1>,
+  f2: SignalStoreFeature<MergeFeatureResults<[NoInfer<Input>, F1]>, F2>,
+  f3: SignalStoreFeature<MergeFeatureResults<[NoInfer<Input>, F1, F2]>, F3>,
+  f4: SignalStoreFeature<MergeFeatureResults<[NoInfer<Input>, F1, F2, F3]>, F4>,
+  f5: SignalStoreFeature<
+    MergeFeatureResults<[NoInfer<Input>, F1, F2, F3, F4]>,
+    F5
+  >
+): SignalStoreFeature<Input, MergeFeatureResults<[F1, F2, F3, F4, F5]>>;
+export function signalStoreFeature<
+  F1 extends SignalStoreFeatureResult,
+  F2 extends SignalStoreFeatureResult,
+  F3 extends SignalStoreFeatureResult,
+  F4 extends SignalStoreFeatureResult,
+  F5 extends SignalStoreFeatureResult,
+  F6 extends SignalStoreFeatureResult,
+  Input extends SignalStoreFeatureResult = EmptyFeatureResult
+>(
+  f1: SignalStoreFeature<NoInfer<Input>, F1>,
+  f2: SignalStoreFeature<MergeFeatureResults<[NoInfer<Input>, F1]>, F2>,
+  f3: SignalStoreFeature<MergeFeatureResults<[NoInfer<Input>, F1, F2]>, F3>,
+  f4: SignalStoreFeature<MergeFeatureResults<[NoInfer<Input>, F1, F2, F3]>, F4>,
+  f5: SignalStoreFeature<
+    MergeFeatureResults<[NoInfer<Input>, F1, F2, F3, F4]>,
+    F5
+  >,
+  f6: SignalStoreFeature<
+    MergeFeatureResults<[NoInfer<Input>, F1, F2, F3, F4, F5]>,
+    F6
+  >
+): SignalStoreFeature<Input, MergeFeatureResults<[F1, F2, F3, F4, F5, F6]>>;
 
 export function signalStoreFeature<
   Input extends Partial<SignalStoreFeatureResult>,

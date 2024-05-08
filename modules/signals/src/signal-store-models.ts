@@ -81,11 +81,16 @@ type FeatureResultKeys<FeatureResult extends SignalStoreFeatureResult> =
   | keyof FeatureResult['signals']
   | keyof FeatureResult['methods'];
 
+// the First can now sometimes be never, when signalStoreFeature is not used
+// inline the Input generic becomes never, I tried other ways to handle it directly
+// in signalStoreFeature but I was not able to make it work
 type MergeTwoFeatureResults<
   First extends SignalStoreFeatureResult,
   Second extends SignalStoreFeatureResult
-> = {
-  state: Omit<First['state'], FeatureResultKeys<Second>>;
-  signals: Omit<First['signals'], FeatureResultKeys<Second>>;
-  methods: Omit<First['methods'], FeatureResultKeys<Second>>;
-} & Second;
+> = [First] extends [never]
+  ? Second
+  : {
+      state: Omit<First['state'], FeatureResultKeys<Second>>;
+      signals: Omit<First['signals'], FeatureResultKeys<Second>>;
+      methods: Omit<First['methods'], FeatureResultKeys<Second>>;
+    } & Second;

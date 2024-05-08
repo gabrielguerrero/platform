@@ -73,6 +73,40 @@ describe('signalStoreFeature', () => {
     expect(store.m1()).toBe('foo10');
   });
 
+  it('a custom feature can receive previous state', () => {
+    const Store = signalStore(
+      withCustomFeature1(),
+      withComputed(({ bar }) => ({
+        s: computed(() => bar() + 's'),
+      })),
+      signalStoreFeature(
+        withState({ foo2: 'foo2' }),
+        withState({ bar2: 'bar2' }),
+        withComputed(({ bar2 }) => ({
+          s2: computed(() => bar2() + 's'),
+        })),
+        withMethods(({ foo, bar, baz, s, foo2, bar2, s2 }) => ({
+          all: () => foo() + bar() + baz() + s() + foo2() + bar2() + s2(),
+        }))
+      )
+    );
+
+    const store = new Store();
+
+    expect(store[STATE_SIGNAL]()).toEqual({
+      foo: 'foo',
+      foo2: 'foo2',
+      bar2: 'bar2',
+    });
+    expect(store.foo()).toBe('foo');
+    expect(store.bar()).toBe('foo1');
+    expect(store.baz()).toBe('foofoo12');
+    expect(store.s()).toBe('foo1s');
+    expect(store.foo2()).toBe('foo2');
+    expect(store.bar2()).toBe('bar2');
+    expect(store.all()).toBe('foofoo1foofoo12foo1sfoo2bar2bar2s');
+  });
+
   it('creates a custom feature with input', () => {
     const Store = signalStore(
       withCustomFeature1(),
